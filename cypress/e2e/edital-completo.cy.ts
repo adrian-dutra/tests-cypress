@@ -32,7 +32,7 @@ describe("Cadastro de Edital Completo - SIGFAP", () => {
     // Termo de Aceite
     cy.contains("Termo de Aceite").click();
     const textoTermoDeAceite =
-      "Declaro estar de acordo com todas as condições do Edital Completo.";
+      "Declaro estar de acordo com todas as condições do Edital Completo - Grupo 14.";
     cy.get('[data-cy="termoDeAceite"]').then((el) => {
       // @ts-ignore
       const editor = el[0].ckeditorInstance;
@@ -42,7 +42,7 @@ describe("Cadastro de Edital Completo - SIGFAP", () => {
     // Texto do Edital
     cy.contains("Texto do Edital").click();
     const textoEdital =
-      "Este edital tem por objetivo fomentar atividades de pesquisa científica e tecnológica.";
+      "Este edital tem por objetivo fomentar atividades de pesquisa científica e tecnológica - Grupo 14.";
     cy.get(".ck-editor__main > .ck").then((el) => {
       // @ts-ignore
       const editor = el[0].ckeditorInstance;
@@ -58,24 +58,34 @@ describe("Cadastro de Edital Completo - SIGFAP", () => {
 
     // Informações Complementares
     cy.contains("Informações Complementares").click();
-    cy.get(
-      '[data-cy="indicadores-de-producao"] > .MuiListItemText-root > .MuiTypography-root'
-    ).click();
 
-    const perguntasInfo = [
-      "#mui-63-option-2",
-      "#mui-70-option-2",
-      "#mui-79-option-1",
-      "#mui-85-option-3",
-      "#mui-90-option-1",
-    ];
+    // Primeira
+    cy.get('[data-cy="perguntaInfoId"]').click();
+    cy.get('[data-cy="areas-tematicas"]').should("be.visible").click();
+    cy.get('[data-cy="informacaoComplementarPergunta-adicionar"]').click();
 
-    perguntasInfo.forEach((seletor) => {
-      cy.get('[data-cy="add-button"]').click();
-      cy.get('[data-cy="perguntaInfoId"]').click();
-      cy.get(seletor).click();
-      cy.get('[data-cy="perguntaInfo-confirmar"]').click();
-    });
+    // Segunda
+    cy.get('[data-cy="perguntaInfoId"]').click();
+    cy.get('[data-cy="objetivos-de-des"]').should("be.visible").click();
+    cy.get('[data-cy="informacaoComplementarPergunta-adicionar"]').click();
+
+    // Terceira
+    cy.get('[data-cy="perguntaInfoId"]').click();
+    cy.get('[data-cy="porte-da-empresa"]').should("be.visible").click();
+    cy.get('[data-cy="informacaoComplementarPergunta-adicionar"]').click();
+
+    // Quarta
+    cy.get('[data-cy="perguntaInfoId"]').click();
+    cy.get('[data-cy="ocupacao-da-equi"]').should("be.visible").click();
+    cy.get('[data-cy="informacaoComplementarPergunta-adicionar"]').click();
+
+    // Quinta (reforço extra com wait e validação de texto)
+    cy.get('[data-cy="perguntaInfoId"]').click();
+    cy.get('[data-cy="data-de-realizac"]')
+      .should("be.visible")
+      .should("contain", "Data de realização do evento")
+      .click();
+    cy.get('[data-cy="informacaoComplementarPergunta-adicionar"]').click();
 
     // Cronograma > Período de Submissão
     cy.contains("Cronograma").click();
