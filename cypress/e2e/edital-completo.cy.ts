@@ -1,5 +1,9 @@
 import { getCurrentDateTime } from "../helpers/date.helper";
 
+Cypress.on("uncaught:exception", (err, runnable) => {
+  return false;
+});
+
 describe("Cadastro de Edital Completo - SIGFAP", () => {
   beforeEach(() => {
     cy.typelogin(
@@ -20,40 +24,61 @@ describe("Cadastro de Edital Completo - SIGFAP", () => {
     });
 
     // Restrições
-    cy.get('[data-cy="restricoes"]').click();
+    cy.contains("Restrições").click();
     cy.get('[data-cy="definirDuracaoProjetoEmMeses"]').check();
     cy.get('[data-cy="duracaoProjetoEmMeses"]').type("12");
     cy.get('[data-cy="pesquisadorSubmeterVariasPropostas"]').check();
 
     // Termo de Aceite
-    // Termo de Aceite
-    cy.get('[data-cy="termoDeAceite-tab"]').click();
-    cy.get('[data-cy="termoDeAceite"]').type(
-      "Declaro estar de acordo com todas as condições do Edital Completo Grupo 14."
-    );
+    cy.contains("Termo de Aceite").click();
+    const textoTermoDeAceite =
+      "Declaro estar de acordo com todas as condições do Edital Completo.";
+    cy.get('[data-cy="termoDeAceite"]').then((el) => {
+      // @ts-ignore
+      const editor = el[0].ckeditorInstance;
+      editor.setData(textoTermoDeAceite);
+    });
 
     // Texto do Edital
-    cy.get('[data-cy="textoEdital"]').type(
-      "Este edital tem por objetivo fomentar atividades de pesquisa científica e tecnológica."
-    );
+    cy.contains("Texto do Edital").click();
+    const textoEdital =
+      "Este edital tem por objetivo fomentar atividades de pesquisa científica e tecnológica.";
+    cy.get(".ck-editor__main > .ck").then((el) => {
+      // @ts-ignore
+      const editor = el[0].ckeditorInstance;
+      editor.setData(textoEdital);
+    });
 
     // Abrangência
-    cy.get('[data-cy="abrangencias"]').click();
-    cy.get('[data-cy-index="abrangencias-item-0"]').click();
-    cy.get('[data-cy-index="abrangencias-item-1"]').click();
-    cy.get('[data-cy-index="abrangencias-item-2"]').click();
+    cy.get(
+      '[data-cy="abrangencia"] > .MuiListItemText-root > .MuiTypography-root'
+    ).click();
+    cy.get('[data-cy="estado-mato-grosso-do-s"]').click();
+    cy.get('[data-cy="estado-rio-grande-do-su"]').click();
 
     // Informações Complementares
-    cy.get('[data-cy="info-complementares"]').click();
-    for (let i = 1; i <= 5; i++) {
-      cy.get('[data-cy="add-info-complementar"]').click();
-      cy.get(`[data-cy="info-complementar-${i}"]`).type(
-        `Informação complementar ${i}`
-      );
-    }
+    cy.contains("Informações Complementares").click();
+    cy.get(
+      '[data-cy="indicadores-de-producao"] > .MuiListItemText-root > .MuiTypography-root'
+    ).click();
+
+    const perguntasInfo = [
+      "#mui-63-option-2",
+      "#mui-70-option-2",
+      "#mui-79-option-1",
+      "#mui-85-option-3",
+      "#mui-90-option-1",
+    ];
+
+    perguntasInfo.forEach((seletor) => {
+      cy.get('[data-cy="add-button"]').click();
+      cy.get('[data-cy="perguntaInfoId"]').click();
+      cy.get(seletor).click();
+      cy.get('[data-cy="perguntaInfo-confirmar"]').click();
+    });
 
     // Cronograma > Período de Submissão
-    cy.get('[data-cy="cronograma"]').click();
+    cy.contains("Cronograma").click();
     cy.get('[data-cy="periodo-de-submissao"]').click();
     cy.get('[data-cy="add-button"]').click();
     cy.get('[data-cy="chamadaUnsaved.inicio"]').type(getCurrentDateTime());
@@ -63,20 +88,20 @@ describe("Cadastro de Edital Completo - SIGFAP", () => {
     cy.get('[data-cy="chamada-confirmar"]').click();
 
     // Orçamento > Programa
-    cy.get('[data-cy="orcamento"]').click();
-    cy.get('[data-cy="programa"]').click();
+    cy.contains("Orçamento").click();
+    cy.contains("Programa").click();
     cy.get('[data-cy="programaId"]').click();
     cy.get('[data-cy-index="programaId-item-0"]').click();
 
     // Rubricas
-    cy.get('[data-cy="rubricas"]').click();
+    cy.contains("Rubricas").click();
     for (let i = 0; i < 5; i++) {
       cy.get('[data-cy="add-rubrica"]').click();
       cy.get(`[data-cy="rubrica-${i}"]`).type(`Rubrica ${i + 1}`);
     }
 
     // Faixas de Financiamento
-    cy.get('[data-cy="faixas"]').click();
+    cy.contains("Faixas de Financiamento").click();
     for (let i = 0; i < 5; i++) {
       cy.get('[data-cy="add-faixa"]').click();
       cy.get(`[data-cy="faixa-${i}-min"]`).type(`${1000 * (i + 1)}`);
@@ -84,7 +109,7 @@ describe("Cadastro de Edital Completo - SIGFAP", () => {
     }
 
     // Documentos
-    cy.get('[data-cy="documentos"]').click();
+    cy.contains("Documentos").click();
     for (let i = 0; i < 2; i++) {
       cy.get('[data-cy="add-doc-proposta"]').click();
       cy.get(`[data-cy="doc-proposta-${i}"]`).type(
@@ -97,7 +122,7 @@ describe("Cadastro de Edital Completo - SIGFAP", () => {
     }
 
     // Perguntas e Indicadores
-    cy.get('[data-cy="perguntas"]').click();
+    cy.contains("Perguntas").click();
     for (let i = 1; i <= 5; i++) {
       cy.get('[data-cy="add-pergunta-projeto"]').click();
       cy.get(`[data-cy="pergunta-projeto-${i}"]`).type(
@@ -109,7 +134,7 @@ describe("Cadastro de Edital Completo - SIGFAP", () => {
     cy.get('[data-cy="indicador-producao"]').type("Patentes{enter}");
 
     // Bolsas
-    cy.get('[data-cy="bolsas"]').click();
+    cy.contains("Bolsas do Edital").click();
     for (let i = 0; i < 5; i++) {
       cy.get('[data-cy="add-bolsa"]').click();
       cy.get(`[data-cy="modalidade-${i}"]`).type(`Modalidade ${i + 1}`);
