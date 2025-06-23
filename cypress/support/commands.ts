@@ -38,7 +38,9 @@ Cypress.Commands.add('editalsimples', () => {
     //Resultado esperado: O Edital deve ser salvo com sucesso e o usuário deve ser redirecionado para a página de Editais.
 });
 Cypress.Commands.add('editalmedio', () => {
-  const tituloEditalMedio = 'grupo-14 E.M 002/2025 [Adriano-Dutra]'; // Adapte com seus dados
+  const tituloEditalMedio = 'grupo-14 E.M 002/2025 adriano-dutra'; // Adapte com seus dados
+  const textoTermoDeAceite = 'Estou de acordo com os termos'
+  const textoEdital = 'Loren'
 
     // ---- 1. Navegação Inicial ----
     cy.get('[data-cy="nav-group-edital"]').click();
@@ -53,26 +55,28 @@ Cypress.Commands.add('editalmedio', () => {
     // 2.2 Restrições (Requisito US-10)
     cy.get('[data-cy="restricoes"]').click();
     cy.get('[data-cy="definirDuracaoProjetoEmMeses"]').check();
-    cy.get('[data-cy="duracaoProjetoEmMeses"]').type('12'); // Exemplo: 12 meses
+    cy.get('[data-cy="duracaoProjetoEmMeses"]').type('12');
     cy.get('[data-cy="pesquisadorSubmeterVariasPropostas"]').check();
 
     // 2.3 Termo de Aceite (Requisito US-11)
-    // OBS: O seletor '[data-cy="termo-de-aceite-tab"]' é uma suposição. Verifique o correto!
-    cy.get('[data-cy="termo-de-aceite-tab"]').click(); 
-    // OBS: O seletor do editor de texto pode variar. Inspecione o elemento.
-    cy.get('[data-cy="termo-de-aceite-editor"]').type('Este é o texto do termo de aceite para o Edital Médio.');
-
+    cy.get('[data-cy="termo-de-aceite"] > .MuiListItemText-root > .MuiTypography-root').click(); 
+    cy.get('[data-cy="termoDeAceite"]').then(el => {
+            // @ts-ignore
+            const editor = el[0].ckeditorInstance; // Obtém a instância do editor CKEditor
+            editor.setData(textoTermoDeAceite); // Define o conteúdo do Termo de Aceite com o texto máximo permitido
+        })
     // 2.4 Texto do Edital (Requisito US-12)
-    // OBS: O seletor '[data-cy="texto-edital-tab"]' é uma suposição. Verifique o correto!
-    cy.get('[data-cy="texto-edital-tab"]').click();
-    cy.get('[data-cy="texto-edital-editor"]').type('Aqui vai o contexto completo do Edital Médio, incluindo objetivos e propósito.');
+    cy.get('[data-cy="texto-do-edital"] > .MuiListItemText-root > .MuiTypography-root').click();
+    cy.get('.ck-editor__main > .ck').then(el => {
+            // @ts-ignore
+            const editor = el[0].ckeditorInstance; // Obtém a instância do editor CKEditor
+            editor.setData(textoEdital); // Define o conteúdo do Termo de Aceite com o texto máximo permitido
+        })
     
     // 2.5 Abrangência (Requisito US-13)
-    // OBS: O seletor '[data-cy="abrangencia-tab"]' é uma suposição. Verifique o correto!
-    cy.get('[data-cy="abrangencia-tab"]').click();
-    // OBS: Encontre os seletores para os estados que deseja marcar.
-    cy.get('[data-cy="abrangencia-estado-ms"]').check();
-    cy.get('[data-cy="abrangencia-estado-rs"]').check();
+    cy.get('[data-cy="abrangencia"] > .MuiListItemText-root > .MuiTypography-root').click();
+    cy.get('[data-cy="estado-mato-grosso-do-s"]').click();
+    cy.get('[data-cy="estado-rio-grande-do-su"]').click();
 
     // ---- 3. Preenchimento do Step "Cronograma" ----
     cy.get('[data-cy="cronograma"]').click();
@@ -81,7 +85,7 @@ Cypress.Commands.add('editalmedio', () => {
     cy.get('[data-cy="periodo-de-submissao"]').click();
     cy.get('[data-cy="add-button"]').click();
     cy.get('[data-cy="chamadaUnsaved.inicio"]').type(getCurrentDateTime());
-    cy.get('[data-cy="chamadaUnsaved.termino"]').type(getCurrentDateTime({ addMonths: 6 })); // Ex: 6 meses de duração
+    cy.get('[data-cy="chamadaUnsaved.termino"]').type(getCurrentDateTime({ addMonths: 6 }));
     cy.get('[data-cy="chamada-confirmar"]').click();
 
     // ---- 4. Preenchimento do Step "Orçamento" ----
@@ -90,20 +94,28 @@ Cypress.Commands.add('editalmedio', () => {
     // 4.1 Programa (Requisito US-20)
     cy.get('[data-cy="programa"]').click();
     cy.get('[data-cy="programaId"]').click();
-    // Seleciona o primeiro item da lista como exemplo
     cy.get('[data-cy-index="programaId-item-0"]').click();
 
     // ---- 5. Preenchimento do Step "Perguntas" ----
-    // OBS: O seletor '[data-cy="perguntas-tab"]' é uma suposição. Verifique o correto!
-    cy.get('[data-cy="perguntas-tab"]').click();
+    cy.get('[data-cy="perguntas"] > .MuiListItemText-root > .MuiTypography-root').click();
 
     // 5.1 Indicadores de Produção (Requisito US-28)
-    // OBS: O seletor '[data-cy="indicadores-producao-sub-tab"]' é uma suposição. Verifique o correto!
-    cy.get('[data-cy="indicadores-producao-sub-tab"]').click();
+    cy.get('[data-cy="indicadores-de-producao"] > .MuiListItemText-root > .MuiTypography-root').click();
     // Adiciona os 3 indicadores, encontrando os seletores corretos para cada um.
-    cy.get('[data-cy="add-indicador-1"]').click();
-    cy.get('[data-cy="add-indicador-2"]').click();
-    cy.get('[data-cy="add-indicador-3"]').click();
+    cy.get('[data-cy="add-button"]').click();
+    cy.get('[data-cy="indicadorProducaoUnsaved.id"]').click();
+    cy.get('#mui-63-option-2').click();
+    cy.get('[data-cy="indicadorProducao-confirmar"]').click();
+
+    cy.get('[data-cy="add-button"]').click();
+    cy.get('[data-cy="indicadorProducaoUnsaved.id"]').click();
+    cy.get('#mui-70-option-2').click();
+    cy.get('[data-cy="indicadorProducao-confirmar"]').click();
+    
+    cy.get('[data-cy="add-button"]').click();
+    cy.get('[data-cy="indicadorProducaoUnsaved.id"]').click();
+    cy.get('#mui-79-option-1').click();
+    cy.get('[data-cy="indicadorProducao-confirmar"]').click();
 
     // ---- 6. Finalização ----
     cy.get('[data-cy="menu-salvar"]').click();
