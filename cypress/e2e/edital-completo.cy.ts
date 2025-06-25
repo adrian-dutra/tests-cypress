@@ -79,12 +79,14 @@ describe("Cadastro de Edital Completo - SIGFAP", () => {
     cy.get('[data-cy="ocupacao-da-equi"]').should("be.visible").click();
     cy.get('[data-cy="informacaoComplementarPergunta-adicionar"]').click();
 
-    // Quinta (reforço extra com wait e validação de texto)
+    // Quinta (com segurança extra para clique)
     cy.get('[data-cy="perguntaInfoId"]').click();
     cy.get('[data-cy="data-de-realizac"]')
       .should("be.visible")
       .should("contain", "Data de realização do evento")
-      .click();
+      .then(($el) => {
+        cy.wrap($el).click();
+      });
     cy.get('[data-cy="informacaoComplementarPergunta-adicionar"]').click();
 
     // Cronograma > Período de Submissão
@@ -99,7 +101,6 @@ describe("Cadastro de Edital Completo - SIGFAP", () => {
 
     // Orçamento > Programa
     cy.contains("Orçamento").click();
-    cy.contains("Programa").click();
     cy.get('[data-cy="programaId"]').click();
     cy.get('[data-cy-index="programaId-item-0"]').click();
 
