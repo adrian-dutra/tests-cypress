@@ -53,8 +53,7 @@ describe("Cadastro de Edital Completo - SIGFAP", () => {
     cy.get(
       '[data-cy="abrangencia"] > .MuiListItemText-root > .MuiTypography-root'
     ).click();
-    cy.get('[data-cy="estado-mato-grosso-do-s"]').click();
-    cy.get('[data-cy="estado-rio-grande-do-su"]').click();
+    cy.get('[data-cy="estado-todos"]').should("be.visible").click();
 
     // Informações Complementares
     cy.contains("Informações Complementares").click();
@@ -101,7 +100,10 @@ describe("Cadastro de Edital Completo - SIGFAP", () => {
 
     // Orçamento > Programa
     cy.contains("Orçamento").click();
-    cy.get('[data-cy="programaId"]').click();
+    cy.contains("Programa").click(); // Isso clica na subaba "Programa"
+    cy.get('[data-cy="programaId"]', { timeout: 7000 })
+      .should("be.visible")
+      .click();
     cy.get('[data-cy-index="programaId-item-0"]').click();
 
     // Rubricas
