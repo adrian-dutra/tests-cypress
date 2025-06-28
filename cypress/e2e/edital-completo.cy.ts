@@ -99,19 +99,42 @@ describe("Cadastro de Edital Completo - SIGFAP", () => {
     cy.get('[data-cy="chamada-confirmar"]').click();
 
     // Orçamento > Programa
-    cy.contains("Orçamento").click();
-    cy.contains("Programa").click(); // Isso clica na subaba "Programa"
+    cy.get('[data-cy="orcamento"] > .MuiListItemText-root > .MuiTypography-root').click();
+    cy.get('[data-cy="programa"] > .MuiListItemText-root > .MuiTypography-root', { timeout: 3000 }).click(); // Isso clica na subaba "Programa"
+    cy.get('[data-cy="add-natureza-da-despesa"]').click();
     cy.get('[data-cy="programaId"]', { timeout: 7000 })
       .should("be.visible")
       .click();
     cy.get('[data-cy-index="programaId-item-0"]').click();
+    cy.get('[data-cy="naturezaDespesaEdital-confirmar"]').click();
 
     // Rubricas
-    cy.contains("Rubricas").click();
-    for (let i = 0; i < 5; i++) {
-      cy.get('[data-cy="add-rubrica"]').click();
-      cy.get(`[data-cy="rubrica-${i}"]`).type(`Rubrica ${i + 1}`);
-    }
+    cy.get('[data-cy="rubricas"] > .MuiListItemText-root > .MuiTypography-root').click();
+
+    cy.get('[data-cy="add-button"]').click();
+    cy.get('[data-cy="editalRubricaUnsaved.tipoEditalRubrica"]').click();
+    cy.get('[data-cy="hospedagem-e-ali"]').click()
+    cy.get('[data-cy="editalRubricaUnsaved.naturezaDespesaId"]').click();
+    cy.get('[data-cy="custeio"]').click();
+    cy.get('[data-cy="editalRubrica-confirmar"]').click();
+    //=============================================
+    cy.get('[data-cy="add-button"]').click();
+    cy.get('[data-cy="editalRubricaUnsaved.tipoEditalRubrica"]').click();
+    cy.get('[data-cy="diarias"]').click();
+    cy.get('[data-cy="editalRubricaUnsaved.naturezaDespesaId"]').click();
+    cy.get('[data-cy="capital"]').click();
+    cy.get('[data-cy="editalRubrica-confirmar"]').click();
+    //=============================================
+    cy.get('[data-cy="add-button"]').click();
+    cy.get('[data-cy="editalRubricaUnsaved.tipoEditalRubrica"]').click();
+    cy.get('[data-cy="servicos-de-terc"]').click()
+    cy.get('[data-cy="editalRubricaUnsaved.naturezaDespesaId"]').click();
+    cy.get('[data-cy="auxilio-a-pesqui"]').click();
+    cy.get('[data-cy="editalRubrica-confirmar"]').click();
+    //=============================================
+
+
+
 
     // Faixas de Financiamento
     cy.contains("Faixas de Financiamento").click();
