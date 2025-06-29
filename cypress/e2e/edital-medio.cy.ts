@@ -18,5 +18,9 @@ describe('Testes de Criação de Edital - Fluxo Médio', () => {
 
   it('TC-EDT-010 - Deve aceitar caracteres especiais no termo de aceite', () => {
     cy.editalmedioTermoEspecial();
-});
+  });
+  
+  it('C6 - Deve aceitar um titulo muito grande', () => {
+    cy.editalMedioTituloMuitoTexto();
+  });
 });
