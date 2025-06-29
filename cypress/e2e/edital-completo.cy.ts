@@ -132,6 +132,36 @@ describe("Cadastro de Edital Completo - SIGFAP", () => {
     cy.get('[data-cy="auxilio-a-pesqui"]').click();
     cy.get('[data-cy="editalRubrica-confirmar"]').click();
     //=============================================
+    //=============================================
+    cy.get('[data-cy="add-button"]').click();
+    cy.get('[data-cy="editalRubricaUnsaved.tipoEditalRubrica"]').click();
+    cy.get('[data-cy="material-de-cons"]').click()
+    cy.get('[data-cy="editalRubricaUnsaved.naturezaDespesaId"]').click();
+    cy.get('[data-cy="auxilio-a-pesqui"]').click();
+    cy.get('[data-cy="editalRubrica-confirmar"]').click();
+    //=============================================
+    //=============================================
+    cy.get('[data-cy="add-button"]').click();
+    cy.get('[data-cy="editalRubricaUnsaved.tipoEditalRubrica"]').click();
+    cy.get('[data-cy="material-permane"]').click()
+    cy.get('[data-cy="editalRubricaUnsaved.naturezaDespesaId"]').click();
+    cy.get('[data-cy="auxilio-a-pesqui"]').click();
+    cy.get('[data-cy="editalRubrica-confirmar"]').click();
+    //=============================================
+    cy.get('[data-cy="add-button"]').click();
+    cy.get('[data-cy="editalRubricaUnsaved.tipoEditalRubrica"]').click();
+    cy.get('[data-cy="passagens"]').click()
+    cy.get('[data-cy="editalRubricaUnsaved.naturezaDespesaId"]').click();
+    cy.get('[data-cy="auxilio-a-pesqui"]').click();
+    cy.get('[data-cy="editalRubrica-confirmar"]').click();
+    //=============================================
+    cy.get('[data-cy="add-button"]').click();
+    cy.get('[data-cy="editalRubricaUnsaved.tipoEditalRubrica"]').click();
+    cy.get('[data-cy="pessoal"]').click()
+    cy.get('[data-cy="editalRubricaUnsaved.naturezaDespesaId"]').click();
+    cy.get('[data-cy="auxilio-a-pesqui"]').click();
+    cy.get('[data-cy="editalRubrica-confirmar"]').click();
+    //=============================================
 
 
 
