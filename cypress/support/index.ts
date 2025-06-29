@@ -3,5 +3,6 @@ declare namespace Cypress{
         typelogin: (url: string, email: string, password: string) => void
         editalsimples: () => void
         editalmedio: () => void
+        editalmedioTermoEspecial: () => void
     }
 }

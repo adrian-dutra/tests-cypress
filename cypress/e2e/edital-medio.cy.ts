@@ -15,4 +15,8 @@ describe('Testes de Criação de Edital - Fluxo Médio', () => {
   it('Deve criar um Edital do tipo Médio preenchendo todos os campos necessários', () => {
     cy.editalmedio();
   });
+
+  it('TC-EDT-010 - Deve aceitar caracteres especiais no termo de aceite', () => {
+    cy.editalmedioTermoEspecial();
+});
 });

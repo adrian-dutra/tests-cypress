@@ -138,12 +138,41 @@ describe("Cadastro de Edital Completo - SIGFAP", () => {
 
     // Faixas de Financiamento
     cy.contains("Faixas de Financiamento").click();
+
+
+    cy.get('[data-cy="add-button"]').should('be.visible').click()
+
+    // Preenche o CKEditor (campo nome)
+    const textoFinan1 = '1financiamneto'
+    cy.get('[data-cy="faixaFinanciamentoUnsaved.nome"]').should('exist')
+    cy.wait(500)
+    cy.get('[data-cy="faixaFinanciamentoUnsaved.nome"]').should('exist').then($el => {
+      // Espera o CKEditor estar instanciado
+      // @ts-ignore
+      const editor = $el[0].ckeditorInstance;
+      if (editor) {
+        editor.setData(textoFinan1);
+      } else {
+        throw new Error('CKEditor não está disponível');
+      }
+    });
+
+    // Preenche os campos numéricos (valor mínimo e máximo)
+    cy.get('[data-cy="faixaFinanciamentoUnsaved.valorMinimo"]').clear().type('1000')
+    cy.get('[data-cy="faixaFinanciamentoUnsaved.valorMaximo"]').clear().type('5000')
+
+    // Preenche o campo observação
+    cy.get('[data-cy="faixaFinanciamentoUnsaved.observacao"]').clear().type('observação de teste')
+
+    // Confirma a faixa
+    cy.get('[data-cy="faixaFinanciamento-confirmar"]').should('be.visible').click()
+
+
     for (let i = 0; i < 5; i++) {
       cy.get('[data-cy="add-faixa"]').click();
       cy.get(`[data-cy="faixa-${i}-min"]`).type(`${1000 * (i + 1)}`);
       cy.get(`[data-cy="faixa-${i}-max"]`).type(`${2000 * (i + 1)}`);
     }
-
     // Documentos
     cy.contains("Documentos").click();
     for (let i = 0; i < 2; i++) {
