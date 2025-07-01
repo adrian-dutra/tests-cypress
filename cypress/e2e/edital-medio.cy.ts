@@ -23,4 +23,8 @@ describe('Testes de Criação de Edital - Fluxo Médio', () => {
   it('C6 - Deve criar um edital medio e aceitar um titulo muito grande', () => {
     cy.editalMedioTituloMuitoTexto();
   });
+
+  it('C7 - Deve acusar erro caso caso o edital seja finalizado com definir duração em meses marcado, mas não existir duração em meses', () => {
+    cy.editalMedioDuracaoDeProjetosVazio();
+  });
 });

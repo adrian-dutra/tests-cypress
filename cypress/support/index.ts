@@ -5,5 +5,7 @@ declare namespace Cypress{
         editalmedio: () => void
         editalmedioTermoEspecial: () => void
         editalMedioTituloMuitoTexto: () => void
+        editalMedioDuracaoDeProjetosVazio: () => void
+
     }
 }
