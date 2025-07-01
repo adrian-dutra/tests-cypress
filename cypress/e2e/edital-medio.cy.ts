@@ -20,7 +20,7 @@ describe('Testes de Criação de Edital - Fluxo Médio', () => {
     cy.editalmedioTermoEspecial();
   });
   
-  it('C6 - Deve aceitar um titulo muito grande', () => {
+  it('C6 - Deve criar um edital medio e aceitar um titulo muito grande', () => {
     cy.editalMedioTituloMuitoTexto();
   });
 });
