@@ -169,52 +169,67 @@ describe("Cadastro de Edital Completo - SIGFAP", () => {
     // Faixas de Financiamento
     cy.contains("Faixas de Financiamento").click();
 
-
-    cy.get('[data-cy="add-button"]').should('be.visible').click()
-
-    // Preenche o CKEditor (campo nome)
-    const textoFinan1 = '1financiamneto'
-    cy.get('[data-cy="faixaFinanciamentoUnsaved.nome"]').should('exist')
-    cy.wait(500)
-    cy.get('[data-cy="faixaFinanciamentoUnsaved.nome"]').should('exist').then($el => {
-      // Espera o CKEditor estar instanciado
-      // @ts-ignore
-      const editor = $el[0].ckeditorInstance;
-      if (editor) {
-        editor.setData(textoFinan1);
-      } else {
-        throw new Error('CKEditor não está disponível');
-      }
-    });
-
-    // Preenche os campos numéricos (valor mínimo e máximo)
-    cy.get('[data-cy="faixaFinanciamentoUnsaved.valorMinimo"]').clear().type('1000')
-    cy.get('[data-cy="faixaFinanciamentoUnsaved.valorMaximo"]').clear().type('5000')
-
-    // Preenche o campo observação
-    cy.get('[data-cy="faixaFinanciamentoUnsaved.observacao"]').clear().type('observação de teste')
-
-    // Confirma a faixa
-    cy.get('[data-cy="faixaFinanciamento-confirmar"]').should('be.visible').click()
-
-
     for (let i = 0; i < 5; i++) {
-      cy.get('[data-cy="add-faixa"]').click();
-      cy.get(`[data-cy="faixa-${i}-min"]`).type(`${1000 * (i + 1)}`);
-      cy.get(`[data-cy="faixa-${i}-max"]`).type(`${2000 * (i + 1)}`);
+      cy.get('[data-cy="add-button"]').should('be.visible').click()
+
+      // Nome da faixa (usa o seletor baseado no índice se disponível, senão usa o seletor genérico)
+      cy.get('[data-cy="faixaFinanciamentoUnsaved.nome"]')
+        .should('be.visible')
+        .click()
+        .type(`{selectall}{backspace}FAIXA TESTE ${i + 1}`);
+
+      // Valores numéricos
+      cy.get('[data-cy="faixaFinanciamentoUnsaved.valorMinimo"]')
+        .clear()
+        .type(`${1000 * (i + 1)}`);
+      cy.get('[data-cy="faixaFinanciamentoUnsaved.valorMaximo"]')
+        .clear()
+        .type(`${2000 * (i + 1)}`);
+
+      // Observação genérica
+      cy.get('[data-cy="faixaFinanciamentoUnsaved.observacao"]')
+        .clear()
+        .type(`Obs ${i + 1}`);
+
+      // Confirma a faixa
+      cy.get('[data-cy="faixaFinanciamento-confirmar"]')
+        .should('be.visible')
+        .click();
     }
+
     // Documentos
-    cy.contains("Documentos").click();
-    for (let i = 0; i < 2; i++) {
-      cy.get('[data-cy="add-doc-proposta"]').click();
-      cy.get(`[data-cy="doc-proposta-${i}"]`).type(
-        `Documento Proposta ${i + 1}`
-      );
-    }
-    for (let i = 0; i < 5; i++) {
-      cy.get('[data-cy="add-doc-pessoal"]').click();
-      cy.get(`[data-cy="doc-pessoal-${i}"]`).type(`Documento Pessoal ${i + 1}`);
-    }
+    cy.get('[data-cy="documentos"]').click();
+    cy.get('[data-cy="documentos-da-proposta"]').click();
+    cy.get('[data-cy="documentoPropostaEdital-adicionar"]').click();
+
+    cy.get('.MuiAccordionSummary-root').click();
+    cy.get('[data-cy="documentoPropostaEdital.0.nome"]').should('be.visible').click().type(`{selectall}{backspace}DOC 1`);
+    cy.get('[data-cy="documentoPropostaEdital.0.descricao"]').clear().type(`Desc`);
+    cy.get('[data-cy="documentoPropostaEdital.0.formatoArquivo"]').click().type('PDF').wait(500).type('{enter}').blur();
+    cy.get('[data-cy="documentoPropostaEdital.0.tamanhoArquivo"]').clear().type(`${10}`);
+    cy.get('[data-cy="documentoPropostaEdital.0.arquivoSubmissaoObrigatoria"]').click();
+    cy.get('[data-cy="documentoPropostaEdital.0.permiteSubmeterMultiplosArquivos"]').click();
+    cy.get('[data-cy="documentoPropostaEdital-adicionar"]').click();
+//=========================================================
+
+    cy.get('[data-cy="documentoPropostaEdital--expandable-item"] > .MuiAccordionSummary-root').click();
+    cy.get('[data-cy="documentoPropostaEdital.1.nome"]').should('be.visible').click().type(`{selectall}{backspace}DOC 2`);
+    cy.get('[data-cy="documentoPropostaEdital.1.descricao"]').clear().type(`Desc`);
+    cy.get('[data-cy="documentoPropostaEdital.1.formatoArquivo"]').click().type('PDF').wait(500).type('{enter}').blur();
+    cy.get('[data-cy="documentoPropostaEdital.1.tamanhoArquivo"]').clear().type(`${10}`);
+    cy.get('[data-cy="documentoPropostaEdital.1.arquivoSubmissaoObrigatoria"]').click();
+    cy.get('[data-cy="documentoPropostaEdital.1.permiteSubmeterMultiplosArquivos"]').click();
+    cy.get('[data-cy="documentoPropostaEdital-adicionar"]').click();
+
+
+    //DOC pessoal
+    //NÃO FINALIZADO
+    cy.get('[data-cy="documentos-pessoais"]').click();
+    cy.get('[data-cy="documentoPessoalEdital-adicionar"]').click();
+    cy.get('[data-cy="documentoPessoalEdital.0.documentoPessoalId"]').click();
+    cy.get('#mui-459-option-1').click();
+    cy.get('[data-cy="documentoPessoalEdital.0.obrigatorio"]').click();
+    cy.get('[data-cy="documentoPessoalEdital-adicionar"]').click();
 
     // Perguntas e Indicadores
     cy.contains("Perguntas").click();
