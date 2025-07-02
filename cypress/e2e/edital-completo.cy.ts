@@ -99,8 +99,13 @@ describe("Cadastro de Edital Completo - SIGFAP", () => {
     cy.get('[data-cy="chamada-confirmar"]').click();
 
     // Orçamento > Programa
-    cy.get('[data-cy="orcamento"] > .MuiListItemText-root > .MuiTypography-root').click();
-    cy.get('[data-cy="programa"] > .MuiListItemText-root > .MuiTypography-root', { timeout: 3000 }).click(); // Isso clica na subaba "Programa"
+    cy.get(
+      '[data-cy="orcamento"] > .MuiListItemText-root > .MuiTypography-root'
+    ).click();
+    cy.get(
+      '[data-cy="programa"] > .MuiListItemText-root > .MuiTypography-root',
+      { timeout: 3000 }
+    ).click(); // Isso clica na subaba "Programa"
     cy.get('[data-cy="add-natureza-da-despesa"]').click();
     cy.get('[data-cy="programaId"]', { timeout: 7000 })
       .should("be.visible")
@@ -109,11 +114,13 @@ describe("Cadastro de Edital Completo - SIGFAP", () => {
     cy.get('[data-cy="naturezaDespesaEdital-confirmar"]').click();
 
     // Rubricas
-    cy.get('[data-cy="rubricas"] > .MuiListItemText-root > .MuiTypography-root').click();
+    cy.get(
+      '[data-cy="rubricas"] > .MuiListItemText-root > .MuiTypography-root'
+    ).click();
 
     cy.get('[data-cy="add-button"]').click();
     cy.get('[data-cy="editalRubricaUnsaved.tipoEditalRubrica"]').click();
-    cy.get('[data-cy="hospedagem-e-ali"]').click()
+    cy.get('[data-cy="hospedagem-e-ali"]').click();
     cy.get('[data-cy="editalRubricaUnsaved.naturezaDespesaId"]').click();
     cy.get('[data-cy="custeio"]').click();
     cy.get('[data-cy="editalRubrica-confirmar"]').click();
@@ -127,7 +134,7 @@ describe("Cadastro de Edital Completo - SIGFAP", () => {
     //=============================================
     cy.get('[data-cy="add-button"]').click();
     cy.get('[data-cy="editalRubricaUnsaved.tipoEditalRubrica"]').click();
-    cy.get('[data-cy="servicos-de-terc"]').click()
+    cy.get('[data-cy="servicos-de-terc"]').click();
     cy.get('[data-cy="editalRubricaUnsaved.naturezaDespesaId"]').click();
     cy.get('[data-cy="auxilio-a-pesqui"]').click();
     cy.get('[data-cy="editalRubrica-confirmar"]').click();
@@ -135,7 +142,7 @@ describe("Cadastro de Edital Completo - SIGFAP", () => {
     //=============================================
     cy.get('[data-cy="add-button"]').click();
     cy.get('[data-cy="editalRubricaUnsaved.tipoEditalRubrica"]').click();
-    cy.get('[data-cy="material-de-cons"]').click()
+    cy.get('[data-cy="material-de-cons"]').click();
     cy.get('[data-cy="editalRubricaUnsaved.naturezaDespesaId"]').click();
     cy.get('[data-cy="auxilio-a-pesqui"]').click();
     cy.get('[data-cy="editalRubrica-confirmar"]').click();
@@ -143,38 +150,35 @@ describe("Cadastro de Edital Completo - SIGFAP", () => {
     //=============================================
     cy.get('[data-cy="add-button"]').click();
     cy.get('[data-cy="editalRubricaUnsaved.tipoEditalRubrica"]').click();
-    cy.get('[data-cy="material-permane"]').click()
+    cy.get('[data-cy="material-permane"]').click();
     cy.get('[data-cy="editalRubricaUnsaved.naturezaDespesaId"]').click();
     cy.get('[data-cy="auxilio-a-pesqui"]').click();
     cy.get('[data-cy="editalRubrica-confirmar"]').click();
     //=============================================
     cy.get('[data-cy="add-button"]').click();
     cy.get('[data-cy="editalRubricaUnsaved.tipoEditalRubrica"]').click();
-    cy.get('[data-cy="passagens"]').click()
+    cy.get('[data-cy="passagens"]').click();
     cy.get('[data-cy="editalRubricaUnsaved.naturezaDespesaId"]').click();
     cy.get('[data-cy="auxilio-a-pesqui"]').click();
     cy.get('[data-cy="editalRubrica-confirmar"]').click();
     //=============================================
     cy.get('[data-cy="add-button"]').click();
     cy.get('[data-cy="editalRubricaUnsaved.tipoEditalRubrica"]').click();
-    cy.get('[data-cy="pessoal"]').click()
+    cy.get('[data-cy="pessoal"]').click();
     cy.get('[data-cy="editalRubricaUnsaved.naturezaDespesaId"]').click();
     cy.get('[data-cy="auxilio-a-pesqui"]').click();
     cy.get('[data-cy="editalRubrica-confirmar"]').click();
     //=============================================
-
-
-
 
     // Faixas de Financiamento
     cy.contains("Faixas de Financiamento").click();
 
     for (let i = 0; i < 5; i++) {
-      cy.get('[data-cy="add-button"]').should('be.visible').click()
+      cy.get('[data-cy="add-button"]').should("be.visible").click();
 
       // Nome da faixa (usa o seletor baseado no índice se disponível, senão usa o seletor genérico)
       cy.get('[data-cy="faixaFinanciamentoUnsaved.nome"]')
-        .should('be.visible')
+        .should("be.visible")
         .click()
         .type(`{selectall}{backspace}FAIXA TESTE ${i + 1}`);
 
@@ -193,7 +197,7 @@ describe("Cadastro de Edital Completo - SIGFAP", () => {
 
       // Confirma a faixa
       cy.get('[data-cy="faixaFinanciamento-confirmar"]')
-        .should('be.visible')
+        .should("be.visible")
         .click();
     }
 
@@ -202,34 +206,93 @@ describe("Cadastro de Edital Completo - SIGFAP", () => {
     cy.get('[data-cy="documentos-da-proposta"]').click();
     cy.get('[data-cy="documentoPropostaEdital-adicionar"]').click();
 
-    cy.get('.MuiAccordionSummary-root').click();
-    cy.get('[data-cy="documentoPropostaEdital.0.nome"]').should('be.visible').click().type(`{selectall}{backspace}DOC 1`);
-    cy.get('[data-cy="documentoPropostaEdital.0.descricao"]').clear().type(`Desc`);
-    cy.get('[data-cy="documentoPropostaEdital.0.formatoArquivo"]').click().type('PDF').wait(500).type('{enter}').blur();
-    cy.get('[data-cy="documentoPropostaEdital.0.tamanhoArquivo"]').clear().type(`${10}`);
-    cy.get('[data-cy="documentoPropostaEdital.0.arquivoSubmissaoObrigatoria"]').click();
-    cy.get('[data-cy="documentoPropostaEdital.0.permiteSubmeterMultiplosArquivos"]').click();
+    cy.get(".MuiAccordionSummary-root").click();
+    cy.get('[data-cy="documentoPropostaEdital.0.nome"]')
+      .should("be.visible")
+      .click()
+      .type(`{selectall}{backspace}DOC 1`);
+    cy.get('[data-cy="documentoPropostaEdital.0.descricao"]')
+      .clear()
+      .type(`Desc`);
+    cy.get('[data-cy="documentoPropostaEdital.0.formatoArquivo"]')
+      .click()
+      .type("PDF")
+      .wait(500)
+      .type("{enter}")
+      .blur();
+    cy.get('[data-cy="documentoPropostaEdital.0.tamanhoArquivo"]')
+      .clear()
+      .type(`${10}`);
+    cy.get(
+      '[data-cy="documentoPropostaEdital.0.arquivoSubmissaoObrigatoria"]'
+    ).click();
+    cy.get(
+      '[data-cy="documentoPropostaEdital.0.permiteSubmeterMultiplosArquivos"]'
+    ).click();
     cy.get('[data-cy="documentoPropostaEdital-adicionar"]').click();
-//=========================================================
+    //=========================================================
 
-    cy.get('[data-cy="documentoPropostaEdital--expandable-item"] > .MuiAccordionSummary-root').click();
-    cy.get('[data-cy="documentoPropostaEdital.1.nome"]').should('be.visible').click().type(`{selectall}{backspace}DOC 2`);
-    cy.get('[data-cy="documentoPropostaEdital.1.descricao"]').clear().type(`Desc`);
-    cy.get('[data-cy="documentoPropostaEdital.1.formatoArquivo"]').click().type('PDF').wait(500).type('{enter}').blur();
-    cy.get('[data-cy="documentoPropostaEdital.1.tamanhoArquivo"]').clear().type(`${10}`);
-    cy.get('[data-cy="documentoPropostaEdital.1.arquivoSubmissaoObrigatoria"]').click();
-    cy.get('[data-cy="documentoPropostaEdital.1.permiteSubmeterMultiplosArquivos"]').click();
+    cy.get(
+      '[data-cy="documentoPropostaEdital--expandable-item"] > .MuiAccordionSummary-root'
+    ).click();
+    cy.get('[data-cy="documentoPropostaEdital.1.nome"]')
+      .should("be.visible")
+      .click()
+      .type(`{selectall}{backspace}DOC 2`);
+    cy.get('[data-cy="documentoPropostaEdital.1.descricao"]')
+      .clear()
+      .type(`Desc`);
+    cy.get('[data-cy="documentoPropostaEdital.1.formatoArquivo"]')
+      .click()
+      .type("PDF")
+      .wait(500)
+      .type("{enter}")
+      .blur();
+    cy.get('[data-cy="documentoPropostaEdital.1.tamanhoArquivo"]')
+      .clear()
+      .type(`${10}`);
+    cy.get(
+      '[data-cy="documentoPropostaEdital.1.arquivoSubmissaoObrigatoria"]'
+    ).click();
+    cy.get(
+      '[data-cy="documentoPropostaEdital.1.permiteSubmeterMultiplosArquivos"]'
+    ).click();
     cy.get('[data-cy="documentoPropostaEdital-adicionar"]').click();
 
-
-    //DOC pessoal
-    //NÃO FINALIZADO
+    // DOC pessoal
     cy.get('[data-cy="documentos-pessoais"]').click();
+
+    // Documento 1 - CPF
     cy.get('[data-cy="documentoPessoalEdital-adicionar"]').click();
     cy.get('[data-cy="documentoPessoalEdital.0.documentoPessoalId"]').click();
-    cy.get('#mui-459-option-1').click();
+    cy.get('[role="option"]').contains("CPF").click();
     cy.get('[data-cy="documentoPessoalEdital.0.obrigatorio"]').click();
     cy.get('[data-cy="documentoPessoalEdital-adicionar"]').click();
+
+    // Documento 2 - RG
+    cy.get('[data-cy="documentoPessoalEdital.1.documentoPessoalId"]').click();
+    cy.get('[role="option"]').contains("RG").click();
+    cy.get('[data-cy="documentoPessoalEdital.1.obrigatorio"]').click();
+    cy.get('[data-cy="documentoPessoalEdital-adicionar"]').click();
+
+    // Documento 3 - Comprovante de Residência
+    cy.get('[data-cy="documentoPessoalEdital.2.documentoPessoalId"]').click();
+    cy.get('[role="option"]').contains("Comprovante de Residência").click();
+    cy.get('[data-cy="documentoPessoalEdital.2.obrigatorio"]').click();
+    cy.get('[data-cy="documentoPessoalEdital-adicionar"]').click();
+
+    // Documento 4 - Título de eleitor
+    cy.get('[data-cy="documentoPessoalEdital.3.documentoPessoalId"]').click();
+    cy.get('[role="option"]').contains("Título de eleitor").click();
+    cy.get('[data-cy="documentoPessoalEdital.3.obrigatorio"]').click();
+    cy.get('[data-cy="documentoPessoalEdital-adicionar"]').click();
+
+    // Documento 5 - Passaporte
+    cy.get('[data-cy="documentoPessoalEdital.4.documentoPessoalId"]').click();
+    cy.get('[role="option"]').contains("Passaporte").click();
+    cy.get('[data-cy="documentoPessoalEdital.4.obrigatorio"]').click();
+
+    cy.contains("Próximo").click();
 
     // Perguntas e Indicadores
     cy.contains("Perguntas").click();
