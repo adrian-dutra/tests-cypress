@@ -295,13 +295,37 @@ describe("Cadastro de Edital Completo - SIGFAP", () => {
     cy.contains("Próximo").click();
 
     // Perguntas e Indicadores
-    cy.contains("Perguntas").click();
-    for (let i = 1; i <= 5; i++) {
-      cy.get('[data-cy="add-pergunta-projeto"]').click();
-      cy.get(`[data-cy="pergunta-projeto-${i}"]`).type(
-        `Descreva o objetivo ${i}`
-      );
-    }
+    cy.get('[data-cy="documentos"]').scrollIntoView();
+    cy.get('[data-cy="perguntas"]').click();
+    cy.get('[data-cy="descricao-do-projeto"]').click();
+
+    // 1
+    cy.get('[data-cy="perguntaDescId"]').click();
+    cy.get('[data-cy="sintese-do-proje"]').click();
+    cy.get('[data-cy="pergunta-adicionar"]').click();
+
+    // 2
+    cy.get('[data-cy="perguntaDescId"]').click();
+    cy.get('[data-cy="objetivos-especi"]').click();
+    cy.get('[data-cy="pergunta-adicionar"]').click();
+
+    // 3
+    cy.get('[data-cy="perguntaDescId"]').click();
+    cy.get('[data-cy="resultados-esper"]').click();
+    cy.get('[data-cy="pergunta-adicionar"]').click();
+
+    // 4
+    cy.get('[data-cy="perguntaDescId"]').click();
+    cy.get('[data-cy="objetivo-geral"]').click();
+    cy.get('[data-cy="pergunta-adicionar"]').click();
+
+    // 5
+    cy.get('[data-cy="perguntaDescId"]').click();
+    cy.get('[data-cy="obras-e-instalac"]').click();
+    cy.get('[data-cy="pergunta-adicionar"]').click();
+
+    // Indicadores de Produção
+    cy.get('[data-cy="indicadores-de-producao"]').click();
     cy.get('[data-cy="indicador-producao"]').type("Publicação{enter}");
     cy.get('[data-cy="indicador-producao"]').type("Eventos{enter}");
     cy.get('[data-cy="indicador-producao"]').type("Patentes{enter}");
