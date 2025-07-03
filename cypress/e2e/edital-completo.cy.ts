@@ -294,69 +294,64 @@ describe("Cadastro de Edital Completo - SIGFAP", () => {
 
     cy.contains("Próximo").click();
 
-    // Perguntas e Indicadores
-    cy.get('[data-cy="documentos"]').scrollIntoView();
-    cy.get('[data-cy="perguntas"]').click();
-    cy.get('[data-cy="descricao-do-projeto"]').click();
-
-    // 1
-    cy.get('[data-cy="perguntaDescId"]').click();
-    cy.get('[data-cy="sintese-do-proje"]').click();
-    cy.get('[data-cy="pergunta-adicionar"]').click();
-
-    // 2
-    cy.get('[data-cy="perguntaDescId"]').click();
-    cy.get('[data-cy="objetivos-especi"]').click();
-    cy.get('[data-cy="pergunta-adicionar"]').click();
-
-    // 3
-    cy.get('[data-cy="perguntaDescId"]').click();
-    cy.get('[data-cy="resultados-esper"]').click();
-    cy.get('[data-cy="pergunta-adicionar"]').click();
-
-    // 4
-    cy.get('[data-cy="perguntaDescId"]').click();
-    cy.get('[data-cy="objetivo-geral"]').click();
-    cy.get('[data-cy="pergunta-adicionar"]').click();
-
-    // 5
-    cy.get('[data-cy="perguntaDescId"]').click();
-    cy.get('[data-cy="obras-e-instalac"]').click();
-    cy.get('[data-cy="pergunta-adicionar"]').click();
-
     // Indicadores de Produção
+    cy.get('[data-cy="perguntas"]').click();
     cy.get('[data-cy="indicadores-de-producao"]').click();
-
-    // 1º indicador: Produção Bibliográfica
     cy.get('[data-cy="add-button"]').click();
-    cy.get(".MuiInputBase-root").click();
-    cy.get('[data-cy="producao-bibliog"]').click();
-    cy.get('[data-cy="indicadorProducao-confirmar"]').click();
-
-    // 2º indicador: Produção Cultural
-    cy.get('[data-cy="add-button"]').click();
-    cy.get(".MuiInputBase-root").click();
+    cy.get('[data-cy="indicadorProducaoUnsaved.id"]').click();
     cy.get('[data-cy="producao-cultura"]').click();
     cy.get('[data-cy="indicadorProducao-confirmar"]').click();
 
-    // 3º indicador: Produção Técnica ou Tecnológica
     cy.get('[data-cy="add-button"]').click();
-    cy.get(".MuiInputBase-root").click();
-    cy.get('[data-cy="producao-tecnica"]').click();
+    cy.get('[data-cy="indicadorProducaoUnsaved.id"]').click();
+    cy.get('[data-cy="producao-bibliog"]').click();
     cy.get('[data-cy="indicadorProducao-confirmar"]').click();
 
-    // Prosseguir para próxima etapa
-    cy.get('[data-cy="next-button"]').click();
+    cy.get('[data-cy="add-button"]').click();
+    cy.get('[data-cy="indicadorProducaoUnsaved.id"]').click();
+    cy.get('[data-cy="indicador-de-pro"]').click();
+    cy.get('[data-cy="indicadorProducao-confirmar"]').click();
 
     // Bolsas
-    cy.contains("Bolsas do Edital").click();
-    for (let i = 0; i < 5; i++) {
-      cy.get('[data-cy="add-bolsa"]').click();
-      cy.get(`[data-cy="modalidade-${i}"]`).type(`Modalidade ${i + 1}`);
-      cy.get(`[data-cy="nivel-${i}"]`).type(`Nível ${i + 1}`);
-    }
+    cy.get('[data-cy="bolsas-do-edital"]').click();
+    cy.get('[data-cy="bolsas"]').click();
 
-    // Finalizar
+    cy.get('[data-cy="add-button"]').click();
+    cy.get('[data-cy="bolsaEditalUnsaved.modalidadeBolsaId"]').click();
+    cy.get('[data-cy="exp"]').click();
+    cy.get('[data-cy="bolsaEditalUnsaved.nivelBolsaId"]').click();
+    cy.get('[data-cy="a-r-5-200-00"]').click();
+    cy.get('[data-cy="bolsaEdital-confirmar"]').click();
+
+    cy.get('[data-cy="add-button"]').click();
+    cy.get('[data-cy="bolsaEditalUnsaved.modalidadeBolsaId"]').click();
+    cy.get('[data-cy="at"]').click();
+    cy.get('[data-cy="bolsaEditalUnsaved.nivelBolsaId"]').click();
+    cy.get('[data-cy="nm-r-560-00"]').click();
+    cy.get('[data-cy="bolsaEdital-confirmar"]').click();
+
+    cy.get('[data-cy="add-button"]').click();
+    cy.get('[data-cy="bolsaEditalUnsaved.modalidadeBolsaId"]').click();
+    cy.get('[data-cy="dct"]').click();
+    cy.get('[data-cy="bolsaEditalUnsaved.nivelBolsaId"]').click();
+    cy.get('[data-cy="i-0-h-r-4-484-00"]').click();
+    cy.get('[data-cy="bolsaEdital-confirmar"]').click();
+
+    cy.get('[data-cy="add-button"]').click();
+    cy.get('[data-cy="bolsaEditalUnsaved.modalidadeBolsaId"]').click();
+    cy.get('[data-cy="set"]').click();
+    cy.get('[data-cy="bolsaEditalUnsaved.nivelBolsaId"]').click();
+    cy.get('[data-cy="a-0-h-1-180-00"]').click();
+    cy.get('[data-cy="bolsaEdital-confirmar"]').click();
+
+    cy.get('[data-cy="add-button"]').click();
+    cy.get('[data-cy="bolsaEditalUnsaved.modalidadeBolsaId"]').click();
+    cy.get('[data-cy="dti-cn-pq"]').click();
+    cy.get('[data-cy="bolsaEditalUnsaved.nivelBolsaId"]').click();
+    cy.get('[data-cy="b-0-h-r-670-00"]').click();
+    cy.get('[data-cy="bolsaEdital-confirmar"]').click();
+
+    //Finalizar
     cy.get('[data-cy="menu-salvar"]').click();
     cy.get('[data-cy="menu-finalizar"]').click();
   });
