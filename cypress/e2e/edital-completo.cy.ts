@@ -20,4 +20,8 @@ describe("Cadastro de Edital Completo - SIGFAP", () => {
   it("C24 - Verifica se as Rubricas estão presentes no edital completo", () => {
     cy.editalcompleto_rubricas();
   });
+
+  it("C29 - Verificar se os indicadores se as bolsas foram adicionadas", () => {
+    cy.editalcompletoIndicadoresAdicionados();
+  });
 });
