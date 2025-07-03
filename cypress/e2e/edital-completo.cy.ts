@@ -326,9 +326,27 @@ describe("Cadastro de Edital Completo - SIGFAP", () => {
 
     // Indicadores de Produção
     cy.get('[data-cy="indicadores-de-producao"]').click();
-    cy.get('[data-cy="indicador-producao"]').type("Publicação{enter}");
-    cy.get('[data-cy="indicador-producao"]').type("Eventos{enter}");
-    cy.get('[data-cy="indicador-producao"]').type("Patentes{enter}");
+
+    // 1º indicador: Produção Bibliográfica
+    cy.get('[data-cy="add-button"]').click();
+    cy.get(".MuiInputBase-root").click();
+    cy.get('[data-cy="producao-bibliog"]').click();
+    cy.get('[data-cy="indicadorProducao-confirmar"]').click();
+
+    // 2º indicador: Produção Cultural
+    cy.get('[data-cy="add-button"]').click();
+    cy.get(".MuiInputBase-root").click();
+    cy.get('[data-cy="producao-cultura"]').click();
+    cy.get('[data-cy="indicadorProducao-confirmar"]').click();
+
+    // 3º indicador: Produção Técnica ou Tecnológica
+    cy.get('[data-cy="add-button"]').click();
+    cy.get(".MuiInputBase-root").click();
+    cy.get('[data-cy="producao-tecnica"]').click();
+    cy.get('[data-cy="indicadorProducao-confirmar"]').click();
+
+    // Prosseguir para próxima etapa
+    cy.get('[data-cy="next-button"]').click();
 
     // Bolsas
     cy.contains("Bolsas do Edital").click();
