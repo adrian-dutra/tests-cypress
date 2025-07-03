@@ -10,5 +10,6 @@ declare namespace Cypress{
         editalsimples_sqlInjection: () => void
         editalcompleto: () => void
         editalcompleto_rubricas: () => void
+        editalcompletoIndicadoresAdicionados: () => void
     }
 }
