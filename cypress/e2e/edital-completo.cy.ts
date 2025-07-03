@@ -13,7 +13,11 @@ describe("Cadastro de Edital Completo - SIGFAP", () => {
     );
   });
 
-  it("Cria um edital completo com todos os campos exigidos conforme a Atividade 2", () => {
+  it("C2 - Cria um edital completo com todos os campos exigidos conforme a Atividade 2", () => {
     cy.editalcompleto();
+  });
+
+  it("C24 - Verifica se as Rubricas estão presentes no edital completo", () => {
+    cy.editalcompleto_rubricas();
   });
 });

@@ -848,3 +848,333 @@ Cypress.Commands.add('editalcompleto', () => {
     cy.get('[data-cy="menu-salvar"]').click();
     cy.get('[data-cy="menu-finalizar"]').click();
 });
+
+
+Cypress.Commands.add('editalcompleto_rubricas', () => {
+  cy.get('[data-cy="nav-group-edital"]').click();
+    cy.get('[data-cy="nav-item-publicar-edital"]').click();
+    cy.get('[data-cy="add-publicar-edital"]').click();
+
+    // Identificação do Edital
+    cy.get('[data-cy="nome"]').type("Grupo-14 E.C. 007/2025 eduardo-nunes", {
+      delay: 0,
+    });
+
+    // Restrições
+    cy.contains("Restrições").click();
+    cy.get('[data-cy="definirDuracaoProjetoEmMeses"]').check();
+    cy.get('[data-cy="duracaoProjetoEmMeses"]').type("12");
+    cy.get('[data-cy="pesquisadorSubmeterVariasPropostas"]').check();
+
+    // Termo de Aceite
+    cy.contains("Termo de Aceite").click();
+    const textoTermoDeAceite =
+      "Declaro estar de acordo com todas as condições do Edital Completo - Grupo 14.";
+    cy.get('[data-cy="termoDeAceite"]').then((el) => {
+      // @ts-ignore
+      const editor = el[0].ckeditorInstance;
+      editor.setData(textoTermoDeAceite);
+    });
+
+    // Texto do Edital
+    cy.contains("Texto do Edital").click();
+    const textoEdital =
+      "Este edital tem por objetivo fomentar atividades de pesquisa científica e tecnológica - Grupo 14.";
+    cy.get(".ck-editor__main > .ck").then((el) => {
+      // @ts-ignore
+      const editor = el[0].ckeditorInstance;
+      editor.setData(textoEdital);
+    });
+
+    // Abrangência
+    cy.get(
+      '[data-cy="abrangencia"] > .MuiListItemText-root > .MuiTypography-root'
+    ).click();
+    cy.get('[data-cy="estado-todos"]').should("be.visible").click();
+
+    // Informações Complementares
+    cy.contains("Informações Complementares").click();
+
+    // Primeira
+    cy.get('[data-cy="perguntaInfoId"]').click();
+    cy.get('[data-cy="data-de-realizac"]').should("be.visible").click();
+    cy.get('[data-cy="informacaoComplementarPergunta-adicionar"]').click();
+    cy.get('[data-cy="informacaoComplementarPergunta--remover"]').click();
+
+    // Segunda
+    cy.get('[data-cy="perguntaInfoId"]').click();
+    cy.get('[data-cy="objetivos-de-des"]').should("be.visible").click();
+    cy.get('[data-cy="informacaoComplementarPergunta-adicionar"]').click();
+
+    // Terceira
+    cy.get('[data-cy="perguntaInfoId"]').click();
+    cy.get('[data-cy="porte-da-empresa"]').should("be.visible").click();
+    cy.get('[data-cy="informacaoComplementarPergunta-adicionar"]').click();
+
+    // Quarta
+    cy.get('[data-cy="perguntaInfoId"]').click();
+    cy.get('[data-cy="ocupacao-da-equi"]').should("be.visible").click();
+    cy.get('[data-cy="informacaoComplementarPergunta-adicionar"]').click();
+
+    cy.get('[data-cy="perguntaInfoId"]').click();
+    cy.get('[data-cy="data-de-realizac"]').should("be.visible").click();
+    cy.get('[data-cy="informacaoComplementarPergunta-adicionar"]').click();
+
+    // Quinta (com segurança extra para clique)
+    cy.get('[data-cy="perguntaInfoId"]').click();
+    cy.get('[data-cy="data-de-realizac"]')
+      .should("be.visible")
+      .should("contain", "Data de realização do evento")
+      .then(($el) => {
+        cy.wrap($el).click();
+      });
+    cy.get('[data-cy="informacaoComplementarPergunta-adicionar"]').click();
+
+    // Cronograma > Período de Submissão
+    cy.contains("Cronograma").click();
+    cy.get('[data-cy="periodo-de-submissao"]').click();
+    cy.get('[data-cy="add-button"]').click();
+    cy.get('[data-cy="chamadaUnsaved.inicio"]').type(getCurrentDateTime());
+    cy.get('[data-cy="chamadaUnsaved.termino"]').type(
+      getCurrentDateTime({ addMonths: 12 })
+    );
+    cy.get('[data-cy="chamada-confirmar"]').click();
+
+    // Orçamento > Programa
+    cy.get(
+      '[data-cy="orcamento"] > .MuiListItemText-root > .MuiTypography-root'
+    ).click();
+    cy.get(
+      '[data-cy="programa"] > .MuiListItemText-root > .MuiTypography-root',
+      { timeout: 3000 }
+    ).click(); // Isso clica na subaba "Programa"
+    cy.get('[data-cy="add-natureza-da-despesa"]').click();
+    cy.get('[data-cy="programaId"]', { timeout: 7000 })
+      .should("be.visible")
+      .click();
+    cy.get('[data-cy-index="programaId-item-0"]').click();
+    cy.get('[data-cy="naturezaDespesaEditalUnsaved.naturezaDespesaId"]').click();
+    cy.get('[data-cy="custeio"]').click();
+    cy.get('[data-cy="naturezaDespesaEditalUnsaved.valor"]').type(`${100}`)
+    cy.get('[data-cy="naturezaDespesaEdital-confirmar"]').click();
+
+    // Rubricas
+    cy.get(
+      '[data-cy="rubricas"] > .MuiListItemText-root > .MuiTypography-root'
+    ).click();
+
+    cy.get('[data-cy="add-button"]').click();
+    cy.get('[data-cy="editalRubricaUnsaved.tipoEditalRubrica"]').click();
+    cy.get('[data-cy="hospedagem-e-ali"]').click();
+    cy.get('[data-cy="editalRubricaUnsaved.naturezaDespesaId"]').click();
+    cy.get('[data-cy="custeio"]').click();
+    cy.get('[data-cy="editalRubrica-confirmar"]').click();
+    //=============================================
+    cy.get('[data-cy="add-button"]').click();
+    cy.get('[data-cy="editalRubricaUnsaved.tipoEditalRubrica"]').click();
+    cy.get('[data-cy="diarias"]').click();
+    cy.get('[data-cy="editalRubricaUnsaved.naturezaDespesaId"]').click();
+    cy.get('[data-cy="capital"]').click();
+    cy.get('[data-cy="editalRubrica-confirmar"]').click();
+    //=============================================
+    cy.get('[data-cy="add-button"]').click();
+    cy.get('[data-cy="editalRubricaUnsaved.tipoEditalRubrica"]').click();
+    cy.get('[data-cy="servicos-de-terc"]').click();
+    cy.get('[data-cy="editalRubricaUnsaved.naturezaDespesaId"]').click();
+    cy.get('[data-cy="auxilio-a-pesqui"]').click();
+    cy.get('[data-cy="editalRubrica-confirmar"]').click();
+    //=============================================
+    //=============================================
+    cy.get('[data-cy="add-button"]').click();
+    cy.get('[data-cy="editalRubricaUnsaved.tipoEditalRubrica"]').click();
+    cy.get('[data-cy="material-de-cons"]').click();
+    cy.get('[data-cy="editalRubricaUnsaved.naturezaDespesaId"]').click();
+    cy.get('[data-cy="auxilio-a-pesqui"]').click();
+    cy.get('[data-cy="editalRubrica-confirmar"]').click();
+    //=============================================
+    //=============================================
+    cy.get('[data-cy="add-button"]').click();
+    cy.get('[data-cy="editalRubricaUnsaved.tipoEditalRubrica"]').click();
+    cy.get('[data-cy="material-permane"]').click();
+    cy.get('[data-cy="editalRubricaUnsaved.naturezaDespesaId"]').click();
+    cy.get('[data-cy="auxilio-a-pesqui"]').click();
+    cy.get('[data-cy="editalRubrica-confirmar"]').click();
+    //=============================================
+    cy.get('[data-cy="add-button"]').click();
+    cy.get('[data-cy="editalRubricaUnsaved.tipoEditalRubrica"]').click();
+    cy.get('[data-cy="passagens"]').click();
+    cy.get('[data-cy="editalRubricaUnsaved.naturezaDespesaId"]').click();
+    cy.get('[data-cy="auxilio-a-pesqui"]').click();
+    cy.get('[data-cy="editalRubrica-confirmar"]').click();
+    //=============================================
+    cy.get('[data-cy="add-button"]').click();
+    cy.get('[data-cy="editalRubricaUnsaved.tipoEditalRubrica"]').click();
+    cy.get('[data-cy="pessoal"]').click();
+    cy.get('[data-cy="editalRubricaUnsaved.naturezaDespesaId"]').click();
+    cy.get('[data-cy="auxilio-a-pesqui"]').click();
+    cy.get('[data-cy="editalRubrica-confirmar"]').click();
+    //=============================================
+
+    cy.log('Verificando se as 7 rubricas foram adicionadas corretamente...');
+
+    const seletorDaLista = 'ul.sc-FFETS.hTVfxc'; // << Use um data-cy aqui se possível!
+
+    // 1. Garanta que a lista tenha 7 itens. Isso já espera os elementos aparecerem.
+    cy.get(seletorDaLista).children().should('have.length', 7);
+
+    // 2. Garanta que a lista esteja visível (opacity: 1)
+    cy.get(seletorDaLista).should('be.visible');
+    cy.get(seletorDaLista).contains('Hospedagem e Alimentação').should('be.visible');
+    cy.get(seletorDaLista).contains('Diárias').should('be.visible');
+    cy.get(seletorDaLista).contains('Serviços de Terceiros').should('be.visible');
+    cy.get(seletorDaLista).contains('Material de Consumo').should('be.visible');
+    cy.get(seletorDaLista).contains('Material Permanente').should('be.visible');
+    cy.get(seletorDaLista).contains('Passagens').should('be.visible');
+    cy.get(seletorDaLista).contains('Pessoal').should('be.visible');
+
+    // Documentos
+    cy.get('[data-cy="documentos"]').click();
+    cy.get('[data-cy="documentos-da-proposta"]').click();
+    cy.get('[data-cy="documentoPropostaEdital-adicionar"]').click();
+
+    cy.get(".MuiAccordionSummary-root").click();
+    cy.get('[data-cy="documentoPropostaEdital.0.nome"]')
+      .should("be.visible")
+      .click()
+      .type(`{selectall}{backspace}DOC 1`);
+    cy.get('[data-cy="documentoPropostaEdital.0.descricao"]')
+      .clear()
+      .type(`Desc`);
+    cy.get('[data-cy="documentoPropostaEdital.0.formatoArquivo"]').click();
+    cy.get('[data-cy="pdf"]').click();
+      
+    cy.get('[data-cy="documentoPropostaEdital.0.tamanhoArquivo"]')
+      .clear()
+      .type(`${10}`);
+    cy.get(
+      '[data-cy="documentoPropostaEdital.0.arquivoSubmissaoObrigatoria"]'
+    ).click();
+    cy.get(
+      '[data-cy="documentoPropostaEdital.0.permiteSubmeterMultiplosArquivos"]'
+    ).click();
+    cy.get('[data-cy="documentoPropostaEdital-adicionar"]').click();
+    //=========================================================
+
+    cy.get(
+      '[data-cy="documentoPropostaEdital--expandable-item"] > .MuiAccordionSummary-root'
+    ).click();
+    cy.get('[data-cy="documentoPropostaEdital.1.nome"]')
+      .should("be.visible")
+      .click()
+      .type(`{selectall}{backspace}DOC 2`);
+    cy.get('[data-cy="documentoPropostaEdital.1.descricao"]')
+      .clear()
+      .type(`Desc`);
+    cy.get('[data-cy="documentoPropostaEdital.1.formatoArquivo"]').click();
+    cy.get('[data-cy="pdf"]').click();
+    cy.get('[data-cy="documentoPropostaEdital.1.tamanhoArquivo"]')
+      .clear()
+      .type(`${10}`);
+    cy.get(
+      '[data-cy="documentoPropostaEdital.1.arquivoSubmissaoObrigatoria"]'
+    ).click();
+    cy.get(
+      '[data-cy="documentoPropostaEdital.1.permiteSubmeterMultiplosArquivos"]'
+    ).click();
+
+    // DOC pessoal
+    cy.get('[data-cy="documentos-pessoais"]').click();
+
+    // Documento 1 - CPF
+    cy.get('[data-cy="documentoPessoalEdital-adicionar"]').click();
+    cy.get('[data-cy="documentoPessoalEdital.0.documentoPessoalId"]').click();
+    cy.get('[role="option"]').contains("CPF").click();
+    cy.get('[data-cy="documentoPessoalEdital.0.obrigatorio"]').click();
+    cy.get('[data-cy="documentoPessoalEdital-adicionar"]').click();
+
+    // Documento 2 - RG
+    cy.get('[data-cy="documentoPessoalEdital.1.documentoPessoalId"]').click();
+    cy.get('[role="option"]').contains("RG").click();
+    cy.get('[data-cy="documentoPessoalEdital.1.obrigatorio"]').click();
+    cy.get('[data-cy="documentoPessoalEdital-adicionar"]').click();
+
+    // Documento 3 - Comprovante de Residência
+    cy.get('[data-cy="documentoPessoalEdital.2.documentoPessoalId"]').click();
+    cy.get('[role="option"]').contains("Comprovante de Residência").click();
+    cy.get('[data-cy="documentoPessoalEdital.2.obrigatorio"]').click();
+    cy.get('[data-cy="documentoPessoalEdital-adicionar"]').click();
+
+    // Documento 4 - Título de eleitor
+    cy.get('[data-cy="documentoPessoalEdital.3.documentoPessoalId"]').click();
+    cy.get('[role="option"]').contains("Título de eleitor").click();
+    cy.get('[data-cy="documentoPessoalEdital.3.obrigatorio"]').click();
+    cy.get('[data-cy="documentoPessoalEdital-adicionar"]').click();
+
+    // Documento 5 - Passaporte
+    cy.get('[data-cy="documentoPessoalEdital.4.documentoPessoalId"]').click();
+    cy.get('[role="option"]').contains("Passaporte").click();
+    cy.get('[data-cy="documentoPessoalEdital.4.obrigatorio"]').click();
+
+    cy.contains("Próximo").click();
+
+    // Indicadores de Produção
+    cy.get('[data-cy="perguntas"]').click();
+    cy.get('[data-cy="indicadores-de-producao"]').click();
+    cy.get('[data-cy="add-button"]').click();
+    cy.get('[data-cy="indicadorProducaoUnsaved.id"]').click();
+    cy.get('[data-cy="producao-cultura"]').click();
+    cy.get('[data-cy="indicadorProducao-confirmar"]').click();
+
+    cy.get('[data-cy="add-button"]').click();
+    cy.get('[data-cy="indicadorProducaoUnsaved.id"]').click();
+    cy.get('[data-cy="producao-bibliog"]').click();
+    cy.get('[data-cy="indicadorProducao-confirmar"]').click();
+
+    cy.get('[data-cy="add-button"]').click();
+    cy.get('[data-cy="indicadorProducaoUnsaved.id"]').click();
+    cy.get('[data-cy="indicador-de-pro"]').click();
+    cy.get('[data-cy="indicadorProducao-confirmar"]').click();
+
+    // Bolsas
+    cy.get('[data-cy="bolsas-do-edital"]').click();
+    cy.get('[data-cy="bolsas"]').click();
+
+    cy.get('[data-cy="add-button"]').click();
+    cy.get('[data-cy="bolsaEditalUnsaved.modalidadeBolsaId"]').click();
+    cy.get('[data-cy="exp"]').click();
+    cy.get('[data-cy="bolsaEditalUnsaved.nivelBolsaId"]').click();
+    cy.get('[data-cy="a-r-5-200-00"]').click();
+    cy.get('[data-cy="bolsaEdital-confirmar"]').click();
+
+    cy.get('[data-cy="add-button"]').click();
+    cy.get('[data-cy="bolsaEditalUnsaved.modalidadeBolsaId"]').click();
+    cy.get('[data-cy="at"]').click();
+    cy.get('[data-cy="bolsaEditalUnsaved.nivelBolsaId"]').click();
+    cy.get('[data-cy="nm-r-560-00"]').click();
+    cy.get('[data-cy="bolsaEdital-confirmar"]').click();
+
+    cy.get('[data-cy="add-button"]').click();
+    cy.get('[data-cy="bolsaEditalUnsaved.modalidadeBolsaId"]').click();
+    cy.get('[data-cy="dct"]').click();
+    cy.get('[data-cy="bolsaEditalUnsaved.nivelBolsaId"]').click();
+    cy.get('[data-cy="i-0-h-r-4-484-00"]').click();
+    cy.get('[data-cy="bolsaEdital-confirmar"]').click();
+
+    cy.get('[data-cy="add-button"]').click();
+    cy.get('[data-cy="bolsaEditalUnsaved.modalidadeBolsaId"]').click();
+    cy.get('[data-cy="set"]').click();
+    cy.get('[data-cy="bolsaEditalUnsaved.nivelBolsaId"]').click();
+    cy.get('[data-cy="a-0-h-1-180-00"]').click();
+    cy.get('[data-cy="bolsaEdital-confirmar"]').click();
+
+    cy.get('[data-cy="add-button"]').click();
+    cy.get('[data-cy="bolsaEditalUnsaved.modalidadeBolsaId"]').click();
+    cy.get('[data-cy="dti-cn-pq"]').click();
+    cy.get('[data-cy="bolsaEditalUnsaved.nivelBolsaId"]').click();
+    cy.get('[data-cy="b-0-h-r-670-00"]').click();
+    cy.get('[data-cy="bolsaEdital-confirmar"]').click();
+
+    //Finalizar
+    cy.get('[data-cy="menu-salvar"]').click();
+    cy.get('[data-cy="menu-finalizar"]').click();
+});

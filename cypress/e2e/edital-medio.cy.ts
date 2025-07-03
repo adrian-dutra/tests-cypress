@@ -16,7 +16,7 @@ describe('Testes de Criação de Edital - Fluxo Médio', () => {
     cy.editalmedio();
   });
 
-  it('TC-EDT-010 - Deve aceitar caracteres especiais no termo de aceite', () => {
+  it('C4 - Deve aceitar caracteres especiais no termo de aceite', () => {
     cy.editalmedioTermoEspecial();
   });
   

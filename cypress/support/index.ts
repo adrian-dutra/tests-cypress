@@ -9,5 +9,6 @@ declare namespace Cypress{
         editalMedioDuracaoDeProjetosNegativo: () => void
         editalsimples_sqlInjection: () => void
         editalcompleto: () => void
+        editalcompleto_rubricas: () => void
     }
 }
