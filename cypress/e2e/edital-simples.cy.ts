@@ -13,4 +13,8 @@ describe('Sistema Integrado de Gestão para Fundações de Amparo a Pesquisas', 
   it.only('Realiza login no sistema e cria um edital simples', () => { //Teste edital simples, se houver mais de um teste, o it.only executa apenas esse teste.
     cy.editalsimples(); //Chama o comando editalsimples para realizar o teste de criação de edital simples
   }); //Aguarda 300ms para garantir que a página foi carregada completamente
+
+  it.only('Realizar teste de sql injection', () => {
+    cy.editalsimples_sqlInjection();
+  });
 });
