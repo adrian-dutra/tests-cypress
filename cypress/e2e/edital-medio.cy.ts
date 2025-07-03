@@ -27,4 +27,10 @@ describe('Testes de Criação de Edital - Fluxo Médio', () => {
   it('C7 - Deve acusar erro caso caso o edital seja finalizado com definir duração em meses marcado, mas não existir duração em meses', () => {
     cy.editalMedioDuracaoDeProjetosVazio();
   });
+
+  it('C8 - Deve acusar acusar erro quando duração do projeto em meses é negativo', () => {
+    cy.editalMedioDuracaoDeProjetosNegativo();
+  });
+
+
 });
